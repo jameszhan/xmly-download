@@ -21,14 +21,16 @@ class AlbumDownloader
     batch_download(doc)
     input = doc.at('div.rC5T.pagination input[type="number"]')
     if input and input.attr('max')
-      total = input.attr('max').value.to_i
-      if total > 1
-        total.downto(2) do |page|
+      max = input.attr('max')
+      total_page = max.is_a? String ? max.to_i : max.value.to_i
+      if total_page > 1
+        total_page.downto(2) do |page|
           doc = get_album_page "#{album_url}p#{page}/"
           batch_download(doc)
         end
       end
     end
+  ensure
     open "#{@storage_dir}/#{@category}_#{@album_id}_success.log", 'w:UTF-8' do |io|
       @success_audios.each do |audio|
         io << audio
@@ -84,7 +86,7 @@ end
 
 if __FILE__ == $0
   downloader = AlbumDownloader.new(4417201, 'keji', ENV['XMLY_UID'], ENV['XMLY_TOKEN'])
-  downloader.download!
+  downloader.download
 end
 
 
