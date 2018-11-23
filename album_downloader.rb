@@ -22,7 +22,7 @@ class AlbumDownloader
     input = doc.at('div.rC5T.pagination input[type="number"]')
     if input and input.attr('max')
       max = input.attr('max')
-      total_page = max.is_a? String ? max.to_i : max.value.to_i
+      total_page = max.respond_to?(:to_i) ? max.to_i : max.value.to_i
       if total_page > 1
         total_page.downto(2) do |page|
           doc = get_album_page "#{album_url}p#{page}/"
