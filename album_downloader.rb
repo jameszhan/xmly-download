@@ -19,7 +19,7 @@ class AlbumDownloader
     album_url = "/#{@category}/#{@album_id}/"
     doc = get_album_page album_url
     batch_download(doc)
-    input = doc.css('div.rC5T.pagination input[type="number"]')
+    input = doc.at('div.rC5T.pagination input[type="number"]')
     if input and input.attr('max')
       total = input.attr('max').value.to_i
       if total > 1

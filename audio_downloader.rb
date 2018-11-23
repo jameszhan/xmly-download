@@ -4,7 +4,7 @@ require_relative 'fileid_decoder'
 require_relative 'params_decryptor'
 
 LOGGER = Logger.new(STDOUT)
-ILLEGAL_FILENAME_CHARS = /[?*:"<>\/|\s]/
+ILLEGAL_FILENAME_CHARS = %r([|/?*:"<>\\])
 
 class AudioDownloader
 
@@ -107,7 +107,7 @@ class AudioDownloader
   end
 
   def sanitize_file_name(name)
-    name.gsub(ILLEGAL_FILENAME_CHARS, '_')
+    name.gsub(ILLEGAL_FILENAME_CHARS, '_').gsub(/\s/, '')
   end
 
 end
