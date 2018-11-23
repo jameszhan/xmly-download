@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+require 'thor'
+require_relative 'album_downloader'
+require_relative 'audio_downloader'
+
+class Xmly < Thor
+
+  desc 'album <album_id> <category> <dir>', 'xmly album 4417201 keji /tmp'
+  def album(album_id, category, storage_dir='/tmp')
+    downloader = AlbumDownloader.new(album_id, category, ENV['XMLY_UID'], ENV['XMLY_TOKEN'], storage_dir)
+    downloader.download
+  end
+
+  desc 'download <audio_ids> <dir>', 'xmly download 26903700,27251627 /tmp'
+  def download(audio_ids, storage_dir='/tmp')
+    downloader = AudioDownloader.new(ENV['XMLY_UID'], ENV['XMLY_TOKEN'])
+    downloader.batch_download(audio_ids.split(',').map(&:strip), storage_dir)
+  end
+
+end
+
+Xmly.start(ARGV)
+
