@@ -47,6 +47,7 @@ brew upgrade rbenv ruby-build
 ```bash
 gem install nokogiri
 gem install faraday
+gem install thor
 ```
 
 ### 下载喜马拉雅付费音频
