@@ -60,6 +60,8 @@ gem install thor
 在网络 `XHR` 中锁定检查支付的请求 `URL`，该 `URL` 以 `https://mpay.ximalaya.com/mobile/track/pay/` 开始。
 此 `URL` 就包含你想要的 `uid` 和 `token`。
 
+> 注意：VIP 和 自购是不同的 `token`
+
 ![uid_token.png](./uid_token.png)
 
 ```bash
