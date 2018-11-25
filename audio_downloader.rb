@@ -53,6 +53,9 @@ class AudioDownloader
         yield "#{audio_id}_#{filename}", false if block_given?
       end
     end
+  rescue Exception => e
+    LOGGER.error("[#{audio_id}] download failure with error (#{e.message}).")
+    yield "#{audio_id}_#{e.message}", false if block_given?
   end
 
   private

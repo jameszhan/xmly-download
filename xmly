@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'thor'
+require 'yaml'
 require_relative 'album_downloader'
 require_relative 'audio_downloader'
 
@@ -9,6 +10,19 @@ class Xmly < Thor
   def album(album_id, category, storage_dir='/tmp')
     downloader = AlbumDownloader.new(album_id, category, ENV['XMLY_UID'], ENV['XMLY_TOKEN'], storage_dir)
     downloader.download
+  end
+
+  desc 'albums <config>.yaml <dir>', 'xmly albums albums.yml /tmp'
+  def albums(albums_config_file, storage_dir='/tmp')
+    album_configs = YAML.load_file(albums_config_file)
+    album_configs.each do |album|
+      say "Begin to download album #{album}", :green
+      target_dir = "#{storage_dir}/#{album['title']}"
+      Dir.mkdir(target_dir) unless Dir.exist?(target_dir)
+      downloader = AlbumDownloader.new(album['id'], album['category'], ENV['XMLY_UID'], ENV['XMLY_TOKEN'], target_dir)
+      downloader.download
+      say "Finish to download album #{album}", :yellow
+    end
   end
 
   desc 'download <audio_ids> <dir>', 'xmly download 26903700,27251627 /tmp'
