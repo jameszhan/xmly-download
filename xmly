@@ -3,8 +3,27 @@ require 'thor'
 require 'yaml'
 require_relative 'album_downloader'
 require_relative 'audio_downloader'
+require_relative 'free_album_downloader'
 
 class Xmly < Thor
+
+  desc 'free <album_id> <category> <dir>', 'Download free album to dir'
+  def free(album_id, storage_dir='/tmp')
+    downloader = FreeAlbumDownloader.new(album_id, storage_dir)
+    downloader.download
+  end
+
+  desc 'frees <config>.yaml <dir>', 'Download free albums'
+  def frees(albums_config_file, storage_dir='/tmp')
+    album_configs = YAML.load_file(albums_config_file)
+    album_configs.each do |album|
+      say "Begin to download album #{album}", :green
+      target_dir = "#{storage_dir}/#{album['title']}"
+      downloader = FreeAlbumDownloader.new(album['id'], target_dir)
+      downloader.download
+      say "Finish to download album #{album}", :yellow
+    end
+  end
 
   desc 'album <album_id> <category> <dir>', 'xmly album 4417201 keji /tmp'
   def album(album_id, category, storage_dir='/tmp')

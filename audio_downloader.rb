@@ -3,10 +3,10 @@ require 'logger'
 require_relative 'fileid_decoder'
 require_relative 'params_decryptor'
 
-LOGGER = Logger.new(STDOUT)
-ILLEGAL_FILENAME_CHARS = %r([|/?*:"<>\\])
-
 class AudioDownloader
+
+  LOGGER = Logger.new(STDOUT)
+  ILLEGAL_FILENAME_CHARS = %r([|/?*:"<>\\])
 
   def initialize(uid, token)
     @decryptor = ParamsDecryptor.new
