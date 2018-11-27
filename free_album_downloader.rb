@@ -2,6 +2,7 @@
 require 'logger'
 require 'faraday'
 require 'json'
+require 'fileutils'
 
 class FreeAlbumDownloader
 
@@ -16,7 +17,7 @@ class FreeAlbumDownloader
   end
 
   def download
-    Dir.mkdir(@storage_dir) unless Dir.exists?(@storage_dir)
+    FileUtils.mkdir_p(@storage_dir) unless Dir.exists?(@storage_dir)
     Dir.chdir(@storage_dir)
     need_break = false
     (1...100).each do |page|
