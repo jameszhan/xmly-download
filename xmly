@@ -7,7 +7,7 @@ require_relative 'free_album_downloader'
 
 class Xmly < Thor
 
-  desc 'free <album_id> <category> <dir>', 'Download free album to dir'
+  desc 'free <album_id> <dir>', 'Download free album to dir'
   def free(album_id, storage_dir='/tmp')
     downloader = FreeAlbumDownloader.new(album_id, storage_dir)
     downloader.download

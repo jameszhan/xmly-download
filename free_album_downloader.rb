@@ -7,7 +7,7 @@ require 'fileutils'
 class FreeAlbumDownloader
 
   LOGGER = Logger.new(STDOUT)
-  ILLEGAL_FILENAME_CHARS = %r([|/?*:"<>\\])
+  ILLEGAL_FILENAME_CHARS = %r([|/?*:"'<>\\])
 
   def initialize(album_id, storage_dir = '/tmp')
     @album_id = album_id
@@ -62,7 +62,7 @@ class FreeAlbumDownloader
       if File.exists?(filename)
         puts "#{filename} have already downloaded!"
       else
-        `wget #{url} --output-document=#{filename}`
+        `wget #{url} --output-document='#{filename}'`
       end
     end
   end
